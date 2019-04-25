@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src=https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js></script>
+    <!-- Title Page-->
+    <title>HYDROQuality</title>
+
+    <!-- Icons font CSS-->
+    <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+    <link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <!-- Font special for pages-->
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+
+
+    <style>
+
+      .wrapper {
+          background-color: #deeffe;
+          border: 1px solid #b9c1cd;
+      }
+
+      .box-style {
+          background-color: #FFFFFF;
+          border: 1px solid #b9c1cd;
+          padding: 15px;
+          line-height: 2em;
+      }
+
+      .btn-file {
+        position: relative;
+        overflow: hidden;
+        }
+
+      .btn-file input[type=file] {
+          position: absolute;
+          top: 0;
+          right: 0;
+          min-width: 100%;
+          min-height: 100%;
+          font-size: 100px;
+          text-align: right;
+          filter: alpha(opacity=0);
+          opacity: 0;
+          outline: none;
+          background: white;
+          cursor: inherit;
+          display: block;
+      }
+
+    </style>
+
+    <!-- Main CSS-->
+    <link href="css/main.css" rel="stylesheet" media="all">
+  </head>
+
+  <body>
+
+    <h1 style="color:blue; padding-left:40px; padding-top:10px;  "> HYDRO
+      <span style="color:green;">Quality</span>
+    </h1>
+      <div class="container-fluid">
+        <form class="wizard-container" id="js-wizard-form" id="upload" action="index.html" method="POST" enctype="multipart/form-data">
+          <ul class="tab-list">
+            <li class="tab-list__item active">
+              <a class="tab-list__link" href="#tab1" data-toggle="tab">
+                <span class="step">1</span>
+                <span class="desc">Upload</span>
+              </a>
+            </li>
+            <li class="tab-list__item">
+              <a class="tab-list__link" href="#tab2" data-toggle="tab">
+                <span class="step">2</span>
+                <span class="desc">Verify</span>
+              </a>
+            </li>
+            <li class="tab-list__item">
+              <a class="tab-list__link" href="#tab3" data-toggle="tab">
+                <span class="step">3</span>
+                <span class="desc">Configure</span>
+              </a>
+            </li>
+            <li class="tab-list__item">
+              <a class="tab-list__link" href="#tab4" data-toggle="tab">
+                <span class="step">4</span>
+                <span class="desc">Run Tests</span>
+              </a>
+            </li>
+            <li class="tab-list__item">
+              <a class="tab-list__link" href="#tab5" data-toggle="tab">
+                <span class="step">5</span>
+                <span class="desc">Review</span>
+              </a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+          <div class="tab-pane active" id="tab1">
+          	<div class="row">
+          		<div class="col-md-12">
+          			<h3 class="text-center">
+          				Welcome to the CUAHSI HYDROQUALITY client.
+          			</h3>
+        <!--       	<form id="upload" action="index.html" method="POST" enctype="multipart/form-data"> -->
+	    		       	<div id="filedrag" style="text-align:center;"> <br>You can drag and drop CSV, and Excel files on this page and they will automatically be uploaded<br><br>
+						        <fieldset>
+                      <table id="table" class="table table-sm">
+              					<thead>
+              						<tr>
+              							<th>
+              								#
+              							</th>
+              							<th>
+              								FILENAME
+              							</th>
+              							<th>
+              								FILE TYPE
+              							</th>
+              							<th>
+              								SIZE
+              							</th>
+              						</tr>
+              					</thead>
+              					<tbody>
+              					</tbody>
+              				</table>
+          	        </fieldset>
+          				</div>
+          				<div class="row">
+	            			<div class="col" >
+                      <label class="btn btn-success btn-block btn-file btn-default">Upload CSV File
+                      <input type="file" id="fileselect" name="fileselect[]" multiple="multiple" />
+                    </label>
+                      <input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="300000" />
+
+	    				        <div id="submitbutton">
+							          <button type="submit"></button>
+                      </div>
+                    </div>
+          					<div class="col">
+            					<button type="button" class="btn btn-success btn-block btn--next">
+            						Continue
+            					</button>
+            				</div>
+            			</div>
+          	<!-- 		</form> -->
+          		</div>
+          	</div>
+          </div>
+
+          <div class="tab-pane" id="tab2">
+            <iframe src="./verify.html" width="100%" height="700px"></iframe>
+                <div class="row">
+                  <div class="col-md-8">
+                  </div>
+                  <div class="col-md-4">
+                    <button type="button" class="btn btn-success btn-block btn--next">
+                      Continue
+                    </button>
+                  </div>
+                </div>
+          </div>
+
+          <div class="tab-pane" id="tab3">
+            <iframe src="./configure.html" width="100%" height="700px"></iframe>
+            <div class="row">
+              <div class="col-md-8">
+              </div>
+              <div class="col-md-4">
+                <button type="button" class="btn btn-success btn-block btn--next">
+                  Continue
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-pane" id="tab4">
+            <div class="row">
+          		<div class="col-md-12">
+          			<p align=center class="progress" style="display: none;">
+          				Running Tests . . .
+          			</p>
+
+          			<div class="progress" style="display: none;">
+        				  <progress value="0" max="100" id="pbar" class="col-md-12"> ></progress>
+          			</div>
+
+          			<div class="row">
+          				<div class="col-md-4">
+          				</div>
+          				<div class="col-md-4">
+          					<button type="button" class="btn btn-success btn-block" onclick=run_tests()>
+          						Run Tests
+          					</button>
+          				</div>
+                  <div id="onlyAfterRun" style="display:none;" class="col-md-4">
+                    <button id="nowContinue" type="button" class="btn btn-success btn-block btn--next">
+                      Continue
+                    </button>
+                  </div>
+          			</div>
+          		</div>
+            </div>
+          </div>
+
+          <div class="tab-pane" id="tab5">
+            <div class="row">
+              <div class="col-md-8 wrapper" style="padding:10px;">
+                <canvas id="mixed-chart" width="800" height="300%" class="box-style"></canvas>
+                <div class="row">
+                  <div class="col-md-6">
+                    <button type="button" class="btn btn-success btn-block">
+                      Prior Data Column
+                    </button>
+                  </div>
+                  <div class="col-md-6">
+                    <button type="button" class="btn btn-success btn-block">
+                      Next Data Column
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 wrapper">
+                <br> <br>
+                <h5><b>Graph Metadata</b></h5>
+                <table class="table table-sm table-bordered box-style">
+                  <!-- <caption>Graph Meta Data</caption> -->
+                  <tr>
+                    <td>DateTime:</td>
+                  </tr>
+                  <tr>
+                    <td>Measurement</td>
+                  </tr>
+                  <tr>
+                    <td>Flag Code:</td>
+                  </tr>
+                  <tr>
+                    <td>Flag Meaning:</td>
+                  </tr>
+                </table>
+                <h5><b>Flagged Data</b></h5>
+                <table class="table table-sm table-bordered box-style">
+                  <!-- <caption>Flagged Data</caption> -->
+                  <tr>
+                    <th>DateTime</th>
+                    <th>Value</th>
+                    <th>QC Flag</th>
+                  </tr>
+                  <tr>
+                    <td>TestData1</td>
+                    <td>TestData1</td>
+                    <td>TestData1</td>
+                  </tr>
+                  <tr>
+                    <td>TestData2</td>
+                    <td>TestData2</td>
+                    <td>TestData2</td>
+                  </tr>
+                  <tr>
+                    <td>TestData2</td>
+                    <td>TestData2</td>
+                    <td>TestData2</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+
+
+      <!-- Jquery JS-->
+      <script src="vendor/jquery/jquery.min.js"></script>
+      <!-- Vendor JS-->
+      <script src="vendor/jquery-validate/jquery.validate.min.js"></script>
+      <script src="vendor/bootstrap-wizard/bootstrap.min.js"></script>
+      <script src="vendor/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+
+
+      <!-- Main JS-->
+      <script src="js/global.js"></script>
+
+      <script>
+
+  		(function() {
+  			function $id(id) {
+  				return document.getElementById(id);
+  			}
+  			function FileDragHover(e) {
+  				e.stopPropagation();
+  				e.preventDefault();
+  				if (e.target.id !="table") e.target.className = (e.type == "dragover" ? "hover" : "");
+  			}
+  			function FileSelectHandler(e) {
+  				FileDragHover(e);
+  				var files = e.target.files || e.dataTransfer.files;
+  				for (var i = 0, f; f = files[i]; i++) {
+  					ParseFile(f);
+  				}
+  			}
+  			function ParseFile(file) {
+  				document.getElementById("table");
+  		        var row = table.insertRow(table.rows.length);
+  		        var cell1 = row.insertCell(0);
+  		        var cell2 = row.insertCell(1);
+  		        var cell3 = row.insertCell(2);
+  		        var cell4 = row.insertCell(3);
+  		        cell1.innerHTML = table.rows.length-1;
+  		        cell2.innerHTML = file.name;
+  		        cell3.innerHTML = file.type;
+  		        cell4.innerHTML = file.size;
+  			}
+
+  		function Init() {
+  				var fileselect = $id("fileselect"),
+  					filedrag = $id("filedrag"),
+  					submitbutton = $id("submitbutton");
+  				fileselect.addEventListener("change", FileSelectHandler, false);
+  				var xhr = new XMLHttpRequest();
+  				if (xhr.upload) {
+  					filedrag.addEventListener("dragover", FileDragHover, false);
+  					filedrag.addEventListener("dragleave", FileDragHover, false);
+  					filedrag.addEventListener("drop", FileSelectHandler, false);
+  					filedrag.style.display = "block";
+  					submitbutton.style.display = "none";
+  				}
+  			}
+  			if (window.File && window.FileList && window.FileReader) {
+  				Init();
+  			}
+  		})();
+
+
+     function run_tests()
+      {
+        $('.progress').css('display','block');
+        var counter = 0;
+      	var downloadTimer = setInterval(function()
+  		    {
+    	  		document.getElementById("pbar").value = 0 + ++counter;
+    		  	if(counter > 100)
+    		  	{
+    		     clearInterval(downloadTimer);
+    			    $('.progress').css('display','none');
+              $('#onlyAfterRun').css('display','block');
+              $('#nowContinue').click();
+    			  }
+  	    	},10);
+	    }
+
+
+  window.onload = function () {
+    new Chart(document.getElementById("mixed-chart"), {
+    type: 'bar',
+    data: {
+      labels: ["1900", "1950", "1999", "2050"],
+      datasets: [{
+          label: "Test1",
+          type: "line",
+          borderColor: "#8e5ea2",
+          data: [408,547,675,734],
+          fill: false
+        }, {
+          label: "Test2",
+          type: "line",
+          borderColor: "#3e95cd",
+          data: [133,221,783,2478],
+          fill: false
+        }, {
+          label: "Test3",
+          type: "bar",
+          backgroundColor: "rgba(0,0,0,0.2)",
+          data: [408,547,675,734],
+        }, {
+          label: "Test4",
+          type: "bar",
+          backgroundColor: "rgba(0,0,0,0.2)",
+          backgroundColorHover: "#3e95cd",
+          data: [133,221,783,2478]
+        }
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Historical and Predicted Water Quality Results'
+      },
+      legend: { display: false }
+    }
+});};
+
+
+
+
+
+
+
+
+      </script>
+
+  </body>
+
+</html>
+<!-- end document-->

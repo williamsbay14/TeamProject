@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Configure</title>
+    <style type="text/css">
+        #configure {
+            padding: 15px;
+        }
+
+        .wrapper {
+            background-color: #deeffe;
+            border: 1px solid #b9c1cd;
+        }
+
+        .modal-body,
+        .modal-footer {
+            background-color: #deeffe;
+        }
+
+        .box {
+            background-color: #FFFFFF;
+            border: 1px solid #b9c1cd;
+            height: 400px;
+            padding: 15px;
+            line-height: 2em;
+        }
+
+        .btns {
+            margin-top: 15px;
+        }
+
+        .data-field,
+        .data-test {
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div id="configure" class="wrapper">
+            <div class="row">
+                <div class="col-md-3">
+                    <h2>Data Fields</h2>
+                    <div id="data-fields" class="box">
+
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h2>Data Field Metadata</h2>
+                            <div id="data-meta" class="box">
+
+                            </div>
+                            <div class="btns">
+                                <button id="modifyMeta" class="btn btn-secondary btn-block disabled" data-toggle="modal"
+                                    data-target=".modify-meta">Modify
+                                    Metadata</button>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <h2>QC Tests</h2>
+                            <div id="data-tests" class="box">
+                            </div>
+                            <div class="btns">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <button id="addTest" class="btn btn-secondary btn-block disabled"
+                                            data-toggle="modal" data-target=".add-test">Add
+                                            Test</button>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button id="modifyTest" class="btn btn-secondary btn-block disabled">Modify
+                                            Test</button>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button id="removeTest" class="btn btn-secondary btn-block disabled">Remove
+                                            Test</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade modify-meta" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="units">Units:</label>
+                            <input type="text" class="form-control" id="units" aria-describedby="units"
+                                value="Fahrenheit">
+                        </div>
+                        <div class="form-group">
+                            <label for="data-type">Data Type:</label>
+                            <input type="text" class="form-control" id="data-type" aria-describedby="data-type"
+                                value="Average">
+                        </div>
+                        <div class="form-group">
+                            <label for="time-units">Time Units Name:</label>
+                            <input type="text" class="form-control" id="time-units" aria-describedby="time-units"
+                                value="Minutes">
+                        </div>
+                        <div class="form-group">
+                            <label for="category">General Category:</label>
+                            <input type="text" class="form-control" id="category" aria-describedby="category"
+                                value="Meterology">
+                        </div>
+                        <div class="form-group">
+                            <label for="interval">Time Interval:</label>
+                            <input type="text" class="form-control" id="interval" aria-describedby="interval"
+                                value="00:01:00">
+                        </div>
+                        <div class="form-group">
+                            <label for="time-zone">Time Zone:</label>
+                            <input type="text" class="form-control" id="time-zone" aria-describedby="time-zone"
+                                value="UTC">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-sm-6">
+                        <button type="button" class="btn btn-block btn-success" data-dismiss="modal">Cancel</button>
+                    </div>
+                    <div class="col-sm-6">
+                        <button type="button" id="save-changes" class="btn btn-block btn-success"
+                            data-dismiss="modal">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade add-test" tabindex="-1" role="dialog" aria-labelledby="add-test" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">New Test</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <canvas id="chart" width="800" height="450"></canvas>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="test-select">Test Type</label>
+                                <select id="test-select" class="form-control">
+                                    <option value=""></option>
+                                    <option value="Outlier Detection" data-fields="outlier-fields">Outlier Detection</option>
+                                    <option value="Repeat Value" data-fields="repeat-fields">Repeat Value</option>
+                                    <option value="Machine Learning" data-fields="machine-fields">Machine Learning</option>
+                                </select>
+                            </div>
+                            <div id="outlier-fields" class="sup-fields d-none">
+                                <div class="form-group">
+                                    <label for="lower-threshold">Lower Threshold</label>
+                                    <input type="text" class="form-control" id="lower-threshold" value="-100">
+                                </div>
+                                <div class="form-group">
+                                    <label for="upper-threshold">Upper Threshold</label>
+                                    <input type="text" class="form-control" id="upper-threshold" value="100">
+                                </div>
+                            </div>
+                            <div id="repeat-fields" class="sup-fields d-none">
+                                <div class="form-group">
+                                    <label for="value-match">Value to match</label>
+                                    <input type="text" class="form-control" id="value-match" value="0">
+                                </div>
+                            </div>
+                            <div id="machine-fields" class="sup-fields d-none">
+                                <div class="form-group">
+                                    <label for="dimension">Dimension</label>
+                                    <input type="text" class="form-control" id="dimension" value="3">
+                                </div>
+                                <div class="form-group">
+                                    <label for="attribute">Attribute</label>
+                                    <input type="text" class="form-control" id="attribute" value="Jawline">
+                                </div>
+                                <div class="form-group">
+                                    <label for="feature">Feature</label>
+                                    <input type="text" class="form-control" id="feature" value="Gender">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-sm-4">
+                        <button type="button" class="btn btn-block btn-success" data-dismiss="modal">Add Additional
+                            data</button>
+                    </div>
+                    <div class="col-sm-4">
+                        <button type="button" class="btn btn-block btn-success" data-dismiss="modal">Cancel</button>
+                    </div>
+                    <div class="col-sm-4">
+                        <button type="button" id="save-test-changes" class="btn btn-block btn-secondary disabled"
+                            data-dismiss="modal">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.3/dist/Chart.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Data bindings
+            $("#configure").on("click", ".data-field", loadData);
+            $("#configure").on("click", ".data-test", enableTestOpts);
+            $("#modifyTest").on("click", modifyTest);
+            $("#removeTest").on("click", removeTest);
+            $("#save-changes").on("click", modifyMeta);
+            $("#test-select").on("change", testFields);
+            $("#save-test-changes").on("click", saveTest);
+            $("#addTest").on("click", resetTests);
+
+            var data = [
+                {
+                    id: 0,
+                    name: "Datavalue1",
+                    mean: 25,
+                    sd: 9.3,
+                    greatest: 112,
+                    lowest: -83,
+                    units: null,
+                    dataType: null,
+                    unitName: null,
+                    category: null,
+                    interval: null,
+                    tests: []
+                },
+                {
+                    id: 1,
+                    name: "Datavalue2",
+                    mean: 26,
+                    sd: 10.3,
+                    greatest: 113,
+                    lowest: -84,
+                    units: null,
+                    dataType: null,
+                    unitName: null,
+                    category: null,
+                    interval: null,
+                    tests: []
+                },
+                {
+                    id: 2,
+                    name: "Datavalue3",
+                    mean: 27,
+                    sd: 11.3,
+                    greatest: 114,
+                    lowest: -85,
+                    units: null,
+                    dataType: null,
+                    unitName: null,
+                    category: null,
+                    interval: null,
+                    tests: []
+                },
+                {
+                    id: 3,
+                    name: "Datavalue4",
+                    mean: 28,
+                    sd: 12.3,
+                    greatest: 115,
+                    lowest: -86,
+                    units: null,
+                    dataType: null,
+                    unitName: null,
+                    category: null,
+                    interval: null,
+                    tests: []
+                },
+                {
+                    id: 4,
+                    name: "Datavalue5",
+                    mean: 29,
+                    sd: 13.3,
+                    greatest: 116,
+                    lowest: -87,
+                    units: null,
+                    dataType: null,
+                    unitName: null,
+                    category: null,
+                    interval: null,
+                    tests: []
+                }
+            ],
+                selected,
+                update = false;
+
+            init();
+
+            function init() {
+                var fields = "";
+                $.each(data, function (i, item) {
+                    fields += "<button class='btn btn-block data-field' data-index='" + item.id + "'>" + item.name + "</button>";
+                });
+                $("#data-fields").html(fields);
+                renderChart();
+            }
+
+            function loadData() {
+                selected = $(this).data("index");
+
+                updateMeta();
+
+                $("#modifyMeta").removeClass("btn-secondary").addClass("btn-success").removeClass("disabled");
+                $("#addTest").removeClass("btn-secondary").addClass("btn-success").removeClass("disabled");
+
+                $("#modifyTest").addClass("btn-secondary").removeClass("btn-success").addClass("disabled");
+                $("#removeTest").addClass("btn-secondary").removeClass("btn-success").addClass("disabled");
+
+                $(".modify-meta .modal-title").html(data[selected].name);
+
+            }
+
+            function updateMeta() {
+                var fieldData = data[selected],
+                    html = "";
+
+                html += "Name: " + fieldData.name + "<br />";
+                html += "Mean: " + fieldData.mean + "<br />";
+                html += "SD: " + fieldData.sd + "<br />";
+                html += "Greatest Value: " + fieldData.greatest + "<br />";
+                html += "Lowest Value: " + fieldData.lowest + "<br />";
+
+                var units = fieldData.units != null ? fieldData.units : "Undefined",
+                    dataType = fieldData.dataType != null ? fieldData.dataType : "Undefined",
+                    unitName = fieldData.unitName != null ? fieldData.unitName : "Undefined",
+                    category = fieldData.category != null ? fieldData.category : "Undefined",
+                    interval = fieldData.interval != null ? fieldData.interval : "Undefined";
+
+                html += "Units: " + units + "<br />";
+                html += "Data Type: " + dataType + "<br />";
+                html += "Time Units Name: " + unitName + "<br />";
+                html += "General Category: " + category + "<br />";
+                html += "Time Interval: " + interval + "<br />";
+
+                $("#data-meta").html(html);
+
+                if(fieldData.tests.length > 0){
+                    var testHTML = "";
+                    for(var i = 0; i < fieldData.tests.length; i++){
+                        testHTML += "<button class='btn btn-block data-test' data-index='" + i + "'>" + fieldData.tests[i].test + "</button>";
+                    }
+                    $("#data-tests").html(testHTML);
+                } else {
+                    $("#data-tests").html("");
+                }
+            }
+
+            function modifyMeta() {
+
+                data[selected].units = $("#units").val();
+                data[selected].dataType = $("#data-type").val();
+                data[selected].unitName = $("#time-units").val();
+                data[selected].category = $("#category").val();
+                data[selected].interval = $("#interval").val();
+
+                updateMeta();
+            }
+
+            function testFields() {
+                var test = $(this).val(),
+                fields = $("option[value='"+test+"']").data("fields");
+
+                $(".sup-fields").addClass("d-none");
+
+                if(fields) {
+                    $("#" + fields).removeClass("d-none");
+                    $("#save-test-changes").removeClass("btn-secondary").addClass("btn-success").removeClass("disabled");
+                } else {
+                    $("#save-test-changes").addClass("btn-secondary").removeClass("btn-success").addClass("disabled");
+                }
+            }
+
+            function resetTests() {
+                $("#test-select").val("");
+                $(".sup-fields").addClass("d-none");
+            }
+
+            function enableTestOpts() {
+                $(".data-test").removeClass("btn-primary");
+                $(this).addClass("btn-primary");
+                $("#modifyTest").removeClass("btn-secondary").addClass("btn-success").removeClass("disabled");
+                $("#removeTest").removeClass("btn-secondary").addClass("btn-success").removeClass("disabled");
+            }
+
+            function modifyTest() {
+                var testData = data[selected].tests[$(".data-test.btn-primary").data("index")],
+                fields = $("option[value='"+testData.test+"']").data("fields");
+
+                $(".add-test").modal("show");
+                $("#test-select").val(testData.test);
+
+                update = true;
+            }
+
+            function saveTest() {
+                var selectedTest = $("#test-select").val(),
+                test = {test: selectedTest};
+
+                switch(selectedTest){
+                    case "Outlier Detection":
+                        test.values = [
+                            {
+                                lowerThreshold: $("#lower-threshold").val() == "" ? -100 : $("#lower-threshold").val(),
+                                upperThreshold: $("#upper-threshold").val() == "" ? 100 : $("#upper-threshold").val()
+                            }
+                        ];
+                        break;
+                    case "Repeat Value":
+                        test.values = [
+                            {
+                                valueMatch: $("#value-match").val() == "" ? 0 : $("#value-match").val()
+                            }
+                        ];
+                        break;
+                    case "Machine learning":
+                        test.values = [
+                            {
+                                dimension: $("#dimension").val() == "" ? 3 : $("#dimension").val(),
+                                attribute: $("#attribute").val() == "" ? "Jawline" : $("#attribute").val(),
+                                feature: $("#feature").val() == "" ? "Gender" : $("#feature").val()
+                            }
+                        ];
+                        break;
+                }
+                if(!update){
+                    data[selected].tests.push(test);
+                } else {
+                    update = false;
+                }
+
+                updateMeta();
+            }
+
+            function removeTest() {
+                var tests = data[selected].tests,
+                index = $(".data-test.btn-primary").data("index"),
+                newTests = [];
+
+                for(var i = 0; i < tests.length; i++){
+                    if(i != index){
+                        newTests.push(tests[i]);
+                    }
+                }
+
+                data[selected].tests = newTests;
+
+                $(".data-test.btn-primary").remove();
+            }
+
+            function renderChart() {
+                var testChart = new Chart(
+                    $("#chart"),
+                    {
+                        type: 'line',
+                        data: {
+                            labels: [-10, 0, 10, 20, 30, 40],
+                            datasets: [
+                                {
+                                    data: [0, 30, 25, 50, -10, 80],
+                                    label: "",
+                                    borderColor: "#3e95cd",
+                                    fill: false
+                                }
+                            ]
+                        },
+                        options: {
+                            title: {
+                                display: false
+                            },
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+                );
+            }
+        });
+    </script>
+</body>
+</html>

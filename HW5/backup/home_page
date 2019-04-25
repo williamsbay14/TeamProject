@@ -1,0 +1,45 @@
+  <!DOCTYPE html>
+<html>
+<head>
+<style>
+
+
+h1 {
+  text-align: left;
+  text-transform: uppercase;
+  margin-top: 10px; 
+  margin-left: 1px;
+}
+h2 {
+  text-align: center;
+  color: Grey;
+  margin-top: 100px; 
+  margin-left: 1px;
+}
+
+p {
+  text-indent: 50px;
+  text-align: justify;
+  letter-spacing: 3px;
+}
+
+</style>
+</head>
+<body>
+
+<div>
+<h1 style="color:blue;"> HYDRO<span style="color: green">Quality</span></h1>
+<ul class="breadcrumb">
+  <li><a href="#">Home</a></li>
+  <li><a href="#">Verify</a></li>
+  <li><a href="#">Configure</a></li>
+  <li><a href="#">Run Tests</a></li>
+  <li><a href="#">Review</a></li>
+  <h2>Welcome to the CUASHI HYDROQUALITY client</h1>
+  <p>This text is me writting information so we have a marker for the paragraph.
+  This serves no real purpose otherwise and can be deleted if not necessary. Thank you
+  for you time.</p>
+</div>
+
+</body>
+</html>

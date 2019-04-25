@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/fontawesome.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+        <title>HydroQuality</title>
+
+
+    <style>
+
+      .wrapper {
+          background-color: #deeffe;
+          border: 1px solid #b9c1cd;
+      }
+
+      .box-style {
+          background-color: #FFFFFF;
+          border: 1px solid #b9c1cd;
+          padding: 15px;
+          line-height: 2em;
+      }
+
+      .btn-file {
+        position: relative;
+        overflow: hidden;
+        }
+
+      .btn-file input[type=file] {
+          position: absolute;
+          top: 0;
+          right: 0;
+          min-width: 100%;
+          min-height: 100%;
+          font-size: 100px;
+          text-align: right;
+          filter: alpha(opacity=0);
+          opacity: 0;
+          outline: none;
+          background: white;
+          cursor: inherit;
+          display: block;
+      }
+
+        .row {
+              padding: 10px;
+          }
+
+          .datatab{float: left; padding: 8px;}
+          .datatab-btn{margin: 50px;}
+          button{display:block;margin-bottom: 20px;right: 0;}
+          tr{transition:all .25s ease-in-out}
+          tr:hover{background-color: #ddd;}
+
+          .wrapper {
+              background-color: #deeffe;
+              border: 1px solid #b9c1cd;
+          }
+
+          .box-style {
+              background-color: #FFFFFF;
+              border: 1px solid #b9c1cd;
+              padding: 15px;
+              line-height: 2em;
+          }
+
+
+    </style>
+
+    </head>
+    <body>
+        <header>
+            <div class="container-fluid"><h1>Hydro<span>Quality</span></h1></div>
+            <div id="breadcrumbs">
+                <ul>
+                    <li class="active" data-view="view-0">Upload</li>
+                    <li data-view="view-1">Verify</li>
+                    <li data-view="view-2">Configure</li>
+                    <li data-view="view-3">Run Tests</li>
+                    <li data-view="view-4">Review</li>
+                </ul>
+            </div>
+        </header>
+        <main class="container-fluid">
+            <div id="view-0" class="view text-center">
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <h2>Welcome to the <span class="text-uppercase">Cuahsi Hydroquality</span> client.</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc viverra fringilla ipsum semper blandit. Donec non arcu eget lacus consequat semper sit amet vitae risus. Cras pharetra convallis nibh, eget consectetur odio eleifend vitae. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Integer sit amet sem neque. Aenean egestas nunc lobortis, tincidunt lacus eget, fringilla metus. Cras id risus nunc. Curabitur enim justo, mollis a ultrices sed, euismod a justo. Nullam aliquam, dui eu dictum luctus, mauris neque porttitor diam, vel dignissim lectus sapien eu neque. Nunc quis luctus nulla. Maecenas eu eros pretium, ultricies urna in, interdum est. Ut laoreet odio non justo accumsan interdum. Nunc tincidunt consectetur mollis. Fusce viverra nibh ac pellentesque convallis.</p>
+                        <div id="error" class="alert alert-danger d-none" role="alert"></div>
+                        <div id="upload">
+                            <input type="file" name="file" id="file">
+                                <div id="dropzone">
+                                    <span class="fas fa-file-upload fa-10x"></span>
+                                    <p>Drag and drop a .CSV file here</p>
+                                </div>
+                        </div>
+                        <div id="upload-table" class="d-none">
+                            <table class="table1 table-sm table">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Filename</th>
+                                        <th>File Type</th>
+                                        <th>Size</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div id="nav">
+                    <div class="row">
+                        <div class="col-md-8 offset-md-2">
+                            <div class="row">
+                                <div class="col-6">
+                                    <input type="file" name="file2" id="file2">
+                                    <label for="file2">
+                                        <div class="btn-yellow" data-mh="nav"><span class="fas fa-folder-open fa-2x"></span> Select a .CSV file</div>
+                                    </label>
+                                </div>
+                                <div class="col-6">
+                                    <button class="btn-green next" id="proceed" data-mh="nav" disabled>Continue <span class="fas fa-chevron-right"></span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upload Progress Modal -->
+            <div class="modal fade upload-progress" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <p><span class="fas fa-spinner fa-spin fa-2x"></span> Uploading...</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Upload Progress Modal End -->
+
+            <div id="view-1" class="view d-none">
+                <div class="container-fluid">
+                    <div class="row w-100">
+                        <div class="col wrapper ">
+                            <h5><strong>Uploaded data file</strong></h5>
+                  <table class="table table-bordered box-style">
+                      <thead>
+                          <tr>
+                              {% for col in colnames %}
+                              <th>{{ col }}</th>
+                              {% endfor %}
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {% for record in records %}
+                          <tr>
+                              {% for col in colnames %}
+                              <td>{{ record[col] }}</td>
+                              {% endfor %}
+                          </tr>
+                          {% endfor %}
+                      </tbody>
+                  </table>
+                        </div>
+                    </div>
+                    <div class="row w-100">
+                        <div class="col wrapper ">
+                            <h2> </h2>
+                            <table id="table1" class="table table-bordered box-style">
+                                <tr>
+                                    <th>Time Stamp</th>
+                                    <th>Select</th>
+                                </tr>
+                                <tr>
+                                    <td>Humidity</td>
+                                    <td><input type="checkbox" name="check-tab1"></td>
+                                </tr>
+                                <tr>
+                                    <td>Temperature</td>
+                                    <td><input type="checkbox" name="check-tab1"></td>
+                                </tr>
+                        </table>
+                        </div>
+                        <div class="datatab datatab-btn">
+                            <button onclick="tab1_To_tab2();" > &gt; </button>
+                            <button onclick="tab2_To_tab1();"> &lt; </button>
+                        </div>
+                        <div class="col">
+                            <div class="datatab wrapper">
+                                <h2> </h2>
+                                <table id="table2" class="table table-bordered box-style">
+                                    <tr>
+                                        <th>Data Columns</th>
+                                        <th>Select</th>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col wrapper">
+                            <h1> </h1>
+                            <table class="table table-bordered box-style">
+                                <tr>
+                                    <th>Select DateTimeColumn</th>
+                                </tr>
+                                <tr>
+                                    <td>LocalDateTime</td>
+                                </tr>
+                                <tr>
+                                    <td>DataValue</td>
+                                </tr>
+                                <tr>
+                                    <td>UTCOffset</td>
+                                </tr>
+                                <tr>
+                                    <td>DateTimeUTC</td>
+                                </tr>
+                                <tr>
+                                    <td>VariableCode</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <button class="btn-green next">Continue <span class="fas fa-chevron-right"></span></button>
+                </div>
+            </div>
+
+            <!-- Configure View Start -->
+            <div id="view-2" class="view d-none">
+                <div id="configure" class="wrapper">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h2>Data Fields</h2>
+                            <div id="data-fields" class="box">
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h2>Data Field Metadata</h2>
+                                    <div id="data-meta" class="box">
+        
+                                    </div>
+                                    <div class="btns">
+                                        <button id="modifyMeta" class="btn btn-secondary btn-block disabled" data-toggle="modal"
+                                            data-target=".modify-meta">Modify
+                                            Metadata</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <h2>QC Tests</h2>
+                                    <div id="data-tests" class="box">
+                                    </div>
+                                    <div class="btns">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <button id="addTest" class="btn btn-secondary btn-block disabled"
+                                                    data-toggle="modal" data-target=".add-test">Add
+                                                    Test</button>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button id="modifyTest" class="btn btn-secondary btn-block disabled">Modify
+                                                    Test</button>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button id="removeTest" class="btn btn-secondary btn-block disabled">Remove
+                                                    Test</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-sm-4 offset-md-8">
+                        <button class="btn-green next">Continue <span class="fas fa-chevron-right"></span></button>
+                    </div>
+                </div>
+            </div>
+            <!-- Configure View End -->
+
+            <!-- Configure Modify Meta Modal -->
+            <div class="modal fade modify-meta" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title"></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="units">Units:</label>
+                                    <input type="text" class="form-control" id="units" aria-describedby="units"
+                                        value="Fahrenheit">
+                                </div>
+                                <div class="form-group">
+                                    <label for="data-type">Data Type:</label>
+                                    <input type="text" class="form-control" id="data-type" aria-describedby="data-type"
+                                        value="Average">
+                                </div>
+                                <div class="form-group">
+                                    <label for="time-units">Time Units Name:</label>
+                                    <input type="text" class="form-control" id="time-units" aria-describedby="time-units"
+                                        value="Minutes">
+                                </div>
+                                <div class="form-group">
+                                    <label for="category">General Category:</label>
+                                    <input type="text" class="form-control" id="category" aria-describedby="category"
+                                        value="Meterology">
+                                </div>
+                                <div class="form-group">
+                                    <label for="interval">Time Interval:</label>
+                                    <input type="text" class="form-control" id="interval" aria-describedby="interval"
+                                        value="00:01:00">
+                                </div>
+                                <div class="form-group">
+                                    <label for="time-zone">Time Zone:</label>
+                                    <input type="text" class="form-control" id="time-zone" aria-describedby="time-zone"
+                                        value="UTC">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="col-sm-6">
+                                <button type="button" class="btn btn-block btn-success" data-dismiss="modal">Cancel</button>
+                            </div>
+                            <div class="col-sm-6">
+                                <button type="button" id="save-changes" class="btn btn-block btn-success"
+                                    data-dismiss="modal">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Configure Modify Meta Modal End -->
+
+            <!-- Configure Add Test Modal -->
+            <div class="modal fade add-test" tabindex="-1" role="dialog" aria-labelledby="add-test" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">New Test</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <canvas id="chart" width="800" height="450"></canvas>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="test-select">Test Type</label>
+                                        <select id="test-select" class="form-control">
+                                            <option value=""></option>
+                                            <option value="Outlier Detection" data-fields="outlier-fields">Outlier Detection</option>
+                                            <option value="Repeat Value" data-fields="repeat-fields">Repeat Value</option>
+                                            <option value="Machine Learning" data-fields="machine-fields">Machine Learning</option>
+                                        </select>
+                                    </div>
+                                    <div id="outlier-fields" class="sup-fields d-none">
+                                        <div class="form-group">
+                                            <label for="lower-threshold">Lower Threshold</label>
+                                            <input type="text" class="form-control" id="lower-threshold" value="-100">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="upper-threshold">Upper Threshold</label>
+                                            <input type="text" class="form-control" id="upper-threshold" value="100">
+                                        </div>
+                                    </div>
+                                    <div id="repeat-fields" class="sup-fields d-none">
+                                        <div class="form-group">
+                                            <label for="value-match">Value to match</label>
+                                            <input type="text" class="form-control" id="value-match" value="0">
+                                        </div>
+                                    </div>
+                                    <div id="machine-fields" class="sup-fields d-none">
+                                        <div class="form-group">
+                                            <label for="dimension">Dimension</label>
+                                            <input type="text" class="form-control" id="dimension" value="3">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="attribute">Attribute</label>
+                                            <input type="text" class="form-control" id="attribute" value="Jawline">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="feature">Feature</label>
+                                            <input type="text" class="form-control" id="feature" value="Gender">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="col-sm-4">
+                                <button type="button" class="btn btn-block btn-success" data-dismiss="modal">Add Additional
+                                    data</button>
+                            </div>
+                            <div class="col-sm-4">
+                                <button type="button" class="btn btn-block btn-success" data-dismiss="modal">Cancel</button>
+                            </div>
+                            <div class="col-sm-4">
+                                <button type="button" id="save-test-changes" class="btn btn-block btn-secondary disabled"
+                                    data-dismiss="modal">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Configure Add Test Modal End -->
+
+            <div id="view-3" class="view d-none">
+                <div class="row">
+                    <div class="col-12">
+                        <p class="progress text-center" style="display: none;">
+                            Running Tests . . .
+                        </p>
+                        <div class="progress" style="display: none;">
+                            <progress value="0" max="100" id="pbar" class="col-12"> ></progress>
+                        </div>
+                        <div class="row">
+                            <div class="col-4 offset-4">
+                                <button id="runTests" class="btn-green next">
+                                    Run Tests
+                                </button>
+                            </div>
+                            <div id="onlyAfterRun" style="display:none;" class="col-4">
+                                <button id="nowContinue" class="btn-green next" >Continue <span class="fas fa-chevron-right"></span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="view-4" class="view d-none">
+                <div class="row">
+                    <div class="col-md-8 wrapper" style="padding:10px;">
+                        <canvas id="mixed-chart" width="800" height="300%" class="box-style"></canvas>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-success btn-block">Prior Data Column</button>
+                            </div>
+                            <div class="col-md-6">
+                            <button type="button" class="btn btn-success btn-block">Next Data Column</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 wrapper">
+                    <h5><strong>Graph Metadata</strong></h5>
+                    <table class="table table-sm table-bordered box-style">
+                      <!-- <caption>Graph Meta Data</caption> -->
+                        <tr>
+                            <td>DateTime:</td>
+                        </tr>
+                        <tr>
+                            <td>Measurement</td>
+                        </tr>
+                        <tr>
+                            <td>Flag Code:</td>
+                        </tr>
+                        <tr>
+                            <td>Flag Meaning:</td>
+                        </tr>
+                    </table>
+                    <h5><strong>Flagged Data</strong></h5>
+                    <table class="table table-sm table-bordered box-style">
+                      <!-- <caption>Flagged Data</caption> -->
+                        <tr>
+                            <th>DateTime</th>
+                            <th>Value</th>
+                            <th>QC Flag</th>
+                        </tr>
+                        <tr>
+                            <td>TestData1</td>
+                            <td>TestData1</td>
+                            <td>TestData1</td>
+                        </tr>
+                        <tr>
+                            <td>TestData2</td>
+                            <td>TestData2</td>
+                            <td>TestData2</td>
+                        </tr>
+                        <tr>
+                            <td>TestData2</td>
+                            <td>TestData2</td>
+                            <td>TestData2</td>
+                        </tr>
+                    </table>
+                </div>
+            
+        </main>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/match-height.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+    <script src=https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js></script>
+
+    <script>
+
+          function tab1_To_tab2()
+          {
+              var table1 = document.getElementById("table1"),
+                  table2 = document.getElementById("table2"),
+                  checkboxes = document.getElementsByName("check-tab1");
+          console.log("Val1 = " + checkboxes.length);
+               for(var i = 0; i < checkboxes.length; i++)
+                   if(checkboxes[i].checked)
+                      {
+                          // create new row and cells
+                          var newRow = table2.insertRow(table2.length),
+                              cell1 = newRow.insertCell(0),
+                              cell4 = newRow.insertCell(1);
+                          // add values to the cells
+                          cell1.innerHTML = table1.rows[i+1].cells[0].innerHTML;
+                          cell4.innerHTML = "<input type='checkbox' name='check-tab2'>";
+
+                          // remove the transfered rows from the first table [table1]
+                          var index = table1.rows[i+1].rowIndex;
+                          table1.deleteRow(index);
+                          // we have deleted some rows so the checkboxes.length have changed
+                          // so we have to decrement the value of i
+                          i--;
+                         console.log(checkboxes.length);
+                      }
+          }
+
+
+          function tab2_To_tab1()
+          {
+              var table1 = document.getElementById("table1"),
+                  table2 = document.getElementById("table2"),
+                  checkboxes = document.getElementsByName("check-tab2");
+          console.log("Val1 = " + checkboxes.length);
+               for(var i = 0; i < checkboxes.length; i++)
+                   if(checkboxes[i].checked)
+                      {
+                          // create new row and cells
+                          var newRow = table1.insertRow(table1.length),
+                              cell1 = newRow.insertCell(0),
+                              cell4 = newRow.insertCell(1);
+                          // add values to the cells
+                          cell1.innerHTML = table2.rows[i+1].cells[0].innerHTML;
+                          cell4.innerHTML = "<input type='checkbox' name='check-tab1'>";
+
+                          // remove the transfered rows from the second table [table2]
+                          var index = table2.rows[i+1].rowIndex;
+                          table2.deleteRow(index);
+                          // we have deleted some rows so the checkboxes.length have changed
+                          // so we have to decrement the value of i
+                          i--;
+                         console.log(checkboxes.length);
+                      }
+          }
+      </script>
+    </body>
+</html>

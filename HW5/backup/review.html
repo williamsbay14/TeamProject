@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>HYDROQUALITY upload</title>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+  </head>
+  <body>
+
+ <!--    <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<h3 class="text-primary text-left">
+				HYDROQUALITY
+			</h3>
+			<nav>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item active">
+						<a href="#">UPLOAD</a>
+					</li>
+					<li class="breadcrumb-item">
+						<a href="#">VERIFY</a>
+					</li>
+					<li class="breadcrumb-item">
+						<a href="#">CONFIGURE</a>
+					</li>
+					<li class="breadcrumb-item">
+						<a href="run_tests.html">RUN TESTS</a>
+					</li>
+					<li class="breadcrumb-item">
+						<a href="#">REVIEW</a>
+					</li>
+				</ol>
+			</nav>
+			<h3 class="text-center">
+				Welcome to the CUAHSI HYDROQUALITY client.
+			</h3>
+      <style>
+table, th, td {
+  border: 1px solid black;
+}
+        
+</style> -->
+<!-- <body> -->
+<!-- 
+<table align="right">
+
+<td><tr>
+    <th>Graph Meta Data</th>
+  </tr>
+  <tr>
+    <td>DateTime:</td>
+  </tr>
+  <tr>
+    <td>Measurement</td>
+  </tr>
+  <tr>
+    <td>Flag Code:</td>
+  </tr>
+  <tr>
+    <td>Flag Meaning:</td>
+  </tr>
+  <tr>
+    <td>Date Flagged:</td>
+  </tr></td>
+    <tr  width="200%"><td><tr>
+    <th>DateTime</th>
+    <th>Value</th>
+    <th>QC Flag</th>
+  </tr>
+  <tr>
+    <td>""</td>
+    <td>""</td>
+  </tr>
+      <tr>
+    <td>""</td>
+    <td>""</td>
+  </tr>
+  <tr>
+    <td>"         "</td>
+    <td>""</td>
+  </tr>
+  
+    </table>
+ -->
+
+
+  
+<script>
+window.onload = function () {
+
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	theme: "light2",
+	title:{
+		text: "Data1"
+	},
+	axisY:{
+		includeZero: false
+	},
+	data: [{        
+		type: "line",       
+		dataPoints: [
+			{ y: 450 },
+			{ y: 414},
+			{ y: 520, indexLabel: "highest",markerColor: "red", markerType: "triangle" },
+			{ y: 460 },
+			{ y: 450 },
+			{ y: 500 },
+			{ y: 480 },
+			{ y: 480 },
+			{ y: 410 , indexLabel: "lowest",markerColor: "DarkSlateGrey", markerType: "cross" },
+			{ y: 500 },
+			{ y: 480 },
+			{ y: 510 }
+		]
+	}]
+});
+chart.render();
+
+}
+</script>
+<body>
+<div id="chartContainer" style="height: 370px; width: 50%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<p style="text-align: left; width:49%; display: inline-block;"><button type="button">Previous</button></p>
+<p style="text-align: left; width:50%;  display: inline-block;"><button type="button">Next</button></p>
+</body>
+</html>

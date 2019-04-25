@@ -1,0 +1,174 @@
+$blue : #dfeeff;
+$darkblue : #0048c8;
+$green : #027935;
+$white : #ffffff;
+$yellow : #fef7c3;
+$grey : #6c757d;
+
+@mixin btn($color, $align: false) {
+    background-color: $color;
+    border-radius: 10px;
+    border: 1px solid $grey;
+    transition: background-color .2s;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    width: 100%;
+    @if $align == true {
+        padding: 15px 0px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    &:hover {
+        background-color: darken($color, 10%);
+    }
+}
+
+h1 {
+    text-transform: uppercase;
+    color: $darkblue;
+    font-size: 2em;
+    font-weight: bold;
+    span {
+        color: $green;
+    }
+}
+#breadcrumbs {
+    background-color: $blue;
+    ul {
+        padding: 0px 0px 0px 15px;
+        margin: 0px;
+        li {
+            display: inline-block;
+            padding: 10px;
+            cursor: default;
+            text-transform: uppercase;
+            font-weight: bold;
+            &::after {
+                font-family: "Font Awesome 5 Free";
+                content: "\f054";
+                margin-left: 15px;
+                margin-right: 15px;
+                font-weight: 900;
+            }
+            &.active {
+                background-color: $green;
+                color: $white;
+            }
+        }
+    }
+}
+main {
+    padding-top: 2em;
+}
+#file,
+#file2{
+    display: none;
+}
+label[for=file] {
+    display: block;
+}
+#dropzone {
+    background-color: $yellow;
+    border-radius: 10px;
+    border: 1px solid $grey;
+    padding: 25px 0px;
+    p {
+        text-transform: uppercase;
+        margin: 1em 0 0 0;
+        font-size: 1.5em;
+    }
+    &:hover {
+        cursor: grab;
+    }
+}
+
+#upload-table {
+    background-color: $yellow;
+    border-radius: 10px;
+    border: 1px solid $grey;
+    padding: 15px;
+    table {
+        border: 1px solid $grey;
+        thead {
+            th {
+                border: 1px solid $grey;
+            }
+        }
+        tbody {
+            background: $white;
+        }
+    }
+    
+}
+
+#nav {
+    padding-top: 2em;
+}
+
+#file2 {
+    & + label {
+        display: block;
+    }
+}
+.btn-yellow {
+    @include btn($yellow, true);
+    width: 100%;
+    cursor: pointer;
+    span {
+        margin-right: .5em;
+    }
+}
+
+.btn-green {
+    @include btn($green);
+    color: $white;
+    span {
+        margin-left: .5em;
+    }
+    &:disabled {
+        @include btn($grey);
+    }
+}
+
+.upload-progress {
+    .modal-content {
+        text-align: center;
+        padding: 15px 0px;
+        p {
+            margin: 0px;
+        }
+    }
+    
+}
+
+#configure {
+    padding: 15px;
+}
+
+.wrapper {
+    background-color: #deeffe;
+    border: 1px solid #b9c1cd;
+}
+
+.modal-body,
+.modal-footer {
+    background-color: #deeffe;
+}
+
+.box {
+    background-color: #FFFFFF;
+    border: 1px solid #b9c1cd;
+    height: 400px;
+    padding: 15px;
+    line-height: 2em;
+}
+
+.btns {
+    margin-top: 15px;
+}
+
+.data-field,
+.data-test {
+    text-align: left;
+}

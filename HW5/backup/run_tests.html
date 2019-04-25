@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>HYDROQUALITY run tests</title>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    	function run_tests()
+    	{
+ 			$('.progress').css('display','block');
+    		console.log("running tests")
+    	}
+    </script>
+
+  </head>
+  <body>
+
+    <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<h3 class="text-primary text-left">
+				HYDROQUALITY
+			</h3>
+			<nav>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item">
+						<a href="upload.html">UPLOAD</a>
+					</li>
+					<li class="breadcrumb-item">
+						<a href="#">VERIFY</a>
+					</li>
+					<li class="breadcrumb-item">
+						<a href="#">CONFIGURE</a>
+					</li>
+					<li class="breadcrumb-item active">
+						<a href="#">RUN TESTS</a>
+					</li>
+					<li class="breadcrumb-item">
+						<a href="#">REVIEW</a>
+					</li>
+				</ol>
+			</nav>
+
+			<p align=center class="progress" style="display: none;">
+				Running Tests . . .
+			</p>
+
+			<div class="progress" style="display: none;">
+
+				<div class="progress-bar w-75">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-4">
+				</div>
+				<div class="col-md-4">
+					 
+					<button type="button" class="btn btn-success btn-block" onclick=run_tests()>
+						Run Tests
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+  </body>
+</html>
